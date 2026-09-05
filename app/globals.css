@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+  --color-ink: #05070a;
+  --color-panel: #0a0e14;
+  --color-panel-2: #0e141c;
+  --color-line: #1b232e;
+  --color-line-2: #273140;
+  --color-fg: #dfe6ef;
+  --color-muted: #8b97a8;
+  --color-dim: #5d6878;
+  --color-accent: #38e0a5;
+  --color-accent-2: #4aa8ff;
+  --color-warn: #f4b942;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Blueprint grid backdrop */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(39, 49, 64, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(39, 49, 64, 0.35) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center top;
+}
+
+.grid-fade {
+  mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 30%, transparent 78%);
+}
+
+.scanline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-accent) 55%, transparent),
+    transparent
+  );
+}
+
+/* Blinking status dot */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.82); }
+}
+.dot-live {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes trace {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.trace {
+  animation: trace 5.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot-live, .trace { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  color: #fff;
+}
+
+/* Thin, unobtrusive scrollbar for horizontal rails */
+.rail::-webkit-scrollbar { height: 6px; }
+.rail::-webkit-scrollbar-track { background: var(--color-panel); }
+.rail::-webkit-scrollbar-thumb { background: var(--color-line-2); border-radius: 3px; }
+
+@media print {
+  body { background: #fff; color: #000; }
+  .no-print { display: none !important; }
+  a { color: #000; text-decoration: none; }
+}
