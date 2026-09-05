@@ -6,9 +6,9 @@
 </p>
 
 <p align="center">
-  <a href="https://rezachalak.com"><img src="https://img.shields.io/badge/website-rezachalak.com-38e0a5?style=for-the-badge&logo=vercel&logoColor=black" alt="Website"/></a>
-  <a href="https://rezachalak.com/about"><img src="https://img.shields.io/badge/résumé-read-0a0e14?style=for-the-badge&logoColor=white" alt="Résumé"/></a>
-  <a href="https://rezachalak.com/blog"><img src="https://img.shields.io/badge/blog-read-1b232e?style=for-the-badge&logoColor=white" alt="Blog"/></a>
+  <a href="https://rezachalak.site"><img src="https://img.shields.io/badge/website-rezachalak.site-38e0a5?style=for-the-badge&logo=vercel&logoColor=black" alt="Website"/></a>
+  <a href="https://rezachalak.site/about"><img src="https://img.shields.io/badge/résumé-read-0a0e14?style=for-the-badge&logoColor=white" alt="Résumé"/></a>
+  <a href="https://rezachalak.site/blog"><img src="https://img.shields.io/badge/blog-read-1b232e?style=for-the-badge&logoColor=white" alt="Blog"/></a>
   <a href="https://www.linkedin.com/in/rezachalak/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
   <a href="https://www.instagram.com/devopsnetwork/"><img src="https://img.shields.io/badge/instagram-%23E4405F.svg?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"/></a>
   <a href="mailto:rezachalak.dev@gmail.com"><img src="https://img.shields.io/badge/gmail-%23EA4335.svg?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
@@ -45,12 +45,12 @@
 ### 📦 Things I build
 
 - [**Backup-Zen**](https://github.com/rezachalak/backup-zen) — Helm chart for automated database backup cronjobs on Kubernetes.
-- [**rezachalak.com**](https://rezachalak.com) — this profile's other half: résumé, services, and blog.
+- [**rezachalak.site**](https://rezachalak.site) — this profile's other half: résumé, services, and blog.
 
 ---
 
 <p align="center">
-  <sub>🎤 Latest write-up: <a href="https://rezachalak.com/blog/talos-cncf-vienna-sep-2026"><i>Immutable, Minimal, Mighty — Running Kubernetes on Bare Metal with Talos</i></a> (CNCF Vienna)</sub>
+  <sub>🎤 Latest write-up: <a href="https://rezachalak.site/blog/talos-cncf-vienna-sep-2026"><i>Immutable, Minimal, Mighty — Running Kubernetes on Bare Metal with Talos</i></a> (CNCF Vienna)</sub>
 </p>
 
 <p align="center">

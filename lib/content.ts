@@ -2,8 +2,8 @@ export const site = {
   name: "Reza Chalak",
   role: "DevOps Engineer",
   location: "Vienna, Austria",
-  domain: "rezachalak.com",
-  url: "https://rezachalak.com",
+  domain: "rezachalak.site",
+  url: "https://rezachalak.site",
   tagline:
     "I build and run the infrastructure and supply chains that ship software — on bare metal, in air-gapped racks, and across AWS and Azure.",
   summary:

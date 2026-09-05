@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/lib/content";
 
+const [host, ...tld] = site.domain.split(".");
+
 export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -21,8 +23,8 @@ export default function Nav() {
             <span className="dot-live absolute inline-flex h-full w-full rounded-full bg-accent" />
           </span>
           <span className="font-mono text-sm tracking-tight">
-            <span className="text-fg">{site.name.toLowerCase().replace(" ", "")}</span>
-            <span className="text-dim">.com</span>
+            <span className="text-fg">{host}</span>
+            <span className="text-dim">.{tld.join(".")}</span>
           </span>
         </Link>
 
