@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { nav, site } from "@/lib/content";
+import { nav, posts, site } from "@/lib/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -9,6 +9,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${site.url}${n.href}`,
       lastModified: now,
       priority: 0.8,
+    })),
+    ...posts.map((p) => ({
+      url: `${site.url}/blog/${p.slug}`,
+      lastModified: new Date(p.dateISO),
+      priority: 0.7,
     })),
   ];
 }

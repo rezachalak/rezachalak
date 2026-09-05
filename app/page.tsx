@@ -3,10 +3,10 @@ import { Eyebrow, SectionTitle, Tag } from "@/components/ui";
 import {
   contact,
   experience,
+  posts,
   services,
   site,
   stats,
-  talks,
 } from "@/lib/content";
 
 const layers = [
@@ -38,7 +38,7 @@ const layers = [
 
 export default function Home() {
   const current = experience[0];
-  const talk = talks[0];
+  const post = posts[0];
 
   return (
     <>
@@ -187,28 +187,33 @@ export default function Home() {
           </div>
 
           <div className="mt-14 lg:mt-0">
-            <SectionTitle meta="speaking">Latest talk</SectionTitle>
+            <SectionTitle meta="writing">Latest post</SectionTitle>
             <p className="font-mono text-sm text-accent">
-              {talk.date}
+              {post.date}
               <span className="text-dim"> · </span>
-              <span className="text-muted">{talk.event}</span>
+              <span className="text-muted">{post.readingTime}</span>
             </p>
             <h3 className="mt-3 text-2xl font-medium leading-snug tracking-tight">
-              {talk.title}
+              <Link
+                href={`/blog/${post.slug}`}
+                className="transition-colors hover:text-accent"
+              >
+                {post.title}
+              </Link>
             </h3>
             <p className="mt-4 text-sm leading-relaxed text-muted">
-              {talk.abstract}
+              {post.excerpt}
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {talk.tags.map((t) => (
+              {post.tags.map((t) => (
                 <Tag key={t}>{t}</Tag>
               ))}
             </div>
             <Link
-              href="/talks"
+              href="/blog"
               className="mt-7 inline-flex items-center gap-2 font-mono text-sm text-accent transition-opacity hover:opacity-80"
             >
-              All talks <span aria-hidden>→</span>
+              All posts <span aria-hidden>→</span>
             </Link>
           </div>
         </div>

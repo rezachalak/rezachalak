@@ -23,7 +23,7 @@ export const contact = {
 export const nav = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
-  { href: "/talks", label: "Talks" },
+  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -235,6 +235,109 @@ export const services = [
       "RAG and orchestration with LangChain, LangGraph, and ADK",
       "Self-hosted inference and data paths that stay inside your network",
       "Observability and cost controls for model-backed services",
+    ],
+  },
+];
+
+export type PostSection = {
+  heading?: string;
+  body?: string[];
+  list?: string[];
+  code?: { lang: string; content: string };
+  callout?: string;
+};
+
+export type Post = {
+  slug: string;
+  title: string;
+  date: string;
+  dateISO: string;
+  readingTime: string;
+  excerpt: string;
+  tags: string[];
+  event?: string;
+  sections: PostSection[];
+};
+
+export const posts: Post[] = [
+  {
+    slug: "talos-cncf-vienna-sep-2026",
+    title: "Immutable, Minimal, Mighty: Running Kubernetes on Bare Metal with Talos",
+    date: "Sep 2026",
+    dateISO: "2026-09-01",
+    readingTime: "9 min read",
+    event: "CNCF Vienna Meetup",
+    excerpt:
+      "The writeup behind my CNCF Vienna talk: why we moved a Docker Swarm appliance to Talos Linux, what air-gapped customer sites actually demand, and the operational trade-offs of giving up SSH.",
+    tags: ["Talos", "Bare Metal", "Kubernetes", "Air-gapped", "GitOps"],
+    sections: [
+      {
+        body: [
+          "This is the long form of the talk I gave at the CNCF Vienna Meetup. The short version: we replaced a Docker Swarm appliance with Kubernetes on Talos Linux, shipped it to air-gapped customer sites, and gave up SSH on purpose. Here is what that actually cost and what it bought.",
+        ],
+      },
+      {
+        heading: "The starting point",
+        body: [
+          "The product was an on-premises appliance. Customers ran it inside their own networks, often with no route to the internet at all — storage-adjacent security tooling tends to live in the parts of the network nobody wants exposed. It ran on Docker Swarm, and for a long time that was a perfectly reasonable choice: a single binary, a manageable mental model, and an install that a field engineer could talk a customer through over the phone.",
+          "What broke down was not Swarm itself. It was everything around it. Ecosystem tooling had moved on — the operators, CSI drivers, backup tools, and policy engines we wanted were all being written for Kubernetes and nothing else. Every capability we needed became a bespoke thing we had to build and maintain ourselves.",
+        ],
+      },
+      {
+        heading: "Why Talos, and not a general-purpose distro",
+        body: [
+          "The obvious move is Kubernetes on the Linux you already know. We tried that mentally and kept arriving at the same problem: on an appliance you ship to someone else's datacenter, a general-purpose OS is a liability surface. Every package is a thing that can drift, a thing a customer can change, and a thing you must patch on their schedule rather than yours.",
+          "Talos inverts that. There is no shell, no package manager, and no SSH. The whole machine is configured through an API with a declarative config, and the root filesystem is immutable. An upgrade is not a package transaction — it is a new image and a reboot.",
+        ],
+        list: [
+          "The node config is a single YAML document you can generate, review, and store in git alongside everything else.",
+          "There is nothing to configuration-drift, because there is no way to hand-edit a running node.",
+          "The attack surface is genuinely small — no shell means no shell to get a foothold in.",
+          "Upgrades are atomic and roll back cleanly, which matters enormously when the machine is 800km away behind a customer's firewall.",
+        ],
+      },
+      {
+        heading: "The part that hurts: no SSH",
+        body: [
+          "This is the objection every engineer raises within thirty seconds, and it is a fair one. Losing SSH means losing the debugging reflex you have built over a career. You cannot exec onto the box and poke around.",
+          "What you get instead is talosctl, which exposes the things you actually needed SSH for — logs, service state, dmesg, network config, disk state, packet captures — as API calls. That is a narrower interface than a shell, and narrower is the point. It is also auditable in a way a shell session never is.",
+          "The honest cost: the first few incidents are slower. Your team has to rebuild its instincts, and there will be a moment where someone badly wants to just cat a file. Budget for that. Run a deliberate game day before you ship it to a customer, not after.",
+        ],
+        callout:
+          "If your team's answer to every production question is \"SSH in and look\", the migration is a cultural change first and a technical one second. Plan it that way.",
+      },
+      {
+        heading: "What air-gapped actually demands",
+        body: [
+          "Air-gapped is a word that gets used loosely. In practice it meant: no image pulls, no Helm repo fetches, no module downloads, no telemetry egress, and no assumption that a certificate authority is reachable for validation. Every byte the cluster needs has to be on the media you ship.",
+        ],
+        list: [
+          "A mirrored registry that ships with the appliance, pre-seeded with every image the install needs — including the ones your dependencies pull implicitly.",
+          "Charts and manifests vendored, not fetched. A Helm repo URL in a manifest is a landmine on a disconnected site.",
+          "An internal PKI, because you cannot lean on a public CA for internal mTLS.",
+          "A reproducible installer: the same inputs must produce the same cluster, because you cannot debug a one-off on the customer's floor.",
+        ],
+      },
+      {
+        heading: "Delivery: the same pipeline, everywhere",
+        body: [
+          "The migration was only worth it because it let us collapse two delivery models into one. The same GitOps pipeline that reconciles our Azure preview environments produces the artifacts that go onto the appliance. The cluster's desired state is a git repository either way; the only difference is whether the reconciler pulls from a remote or from a bundle that arrived on disk.",
+          "That is the real payoff, and it is worth being precise about it: the win was not Kubernetes. The win was having one description of a deployed system instead of two, and one set of tools that operates on it.",
+        ],
+      },
+      {
+        heading: "Would I do it again?",
+        body: [
+          "Yes, with two caveats. First, do not migrate to Kubernetes because it is Kubernetes — we did it because the ecosystem we needed only existed there, and that is a specific, checkable reason. If Swarm still gives you everything you need, you are fine.",
+          "Second, Talos is the right call specifically when you do not control the machine's environment and you do want to control the machine. On a cluster your own team runs, in your own datacenter, with your own on-call rotation, a general-purpose distro costs you much less. On an appliance in someone else's rack, immutability stops being an aesthetic preference and starts being the thing that lets you sleep.",
+        ],
+      },
+      {
+        heading: "Slides and questions",
+        body: [
+          "The slides from the CNCF Vienna session are available on request, and I am happy to go deeper on any of this — particularly the air-gapped installer work, which was the least glamorous and most interesting part of the project. Email is the fastest way to reach me.",
+        ],
+      },
     ],
   },
 ];
