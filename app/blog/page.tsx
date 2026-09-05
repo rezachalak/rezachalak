@@ -53,8 +53,15 @@ export default function Blog() {
                   ))}
                 </div>
 
-                <span className="mt-6 inline-flex items-center gap-2 font-mono text-sm text-accent">
-                  Read post <span aria-hidden>→</span>
+                <span className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-sm">
+                  <span className="inline-flex items-center gap-2 text-accent">
+                    Read post <span aria-hidden>→</span>
+                  </span>
+                  {p.links?.map((l) => (
+                    <span key={l.href} className="text-[13px] text-dim">
+                      {l.label}
+                    </span>
+                  ))}
                 </span>
               </Link>
             </li>

@@ -247,6 +247,12 @@ export type PostSection = {
   callout?: string;
 };
 
+export type PostLink = {
+  label: string;
+  href: string;
+  kind: "slides" | "repo" | "video" | "external";
+};
+
 export type Post = {
   slug: string;
   title: string;
@@ -256,6 +262,7 @@ export type Post = {
   excerpt: string;
   tags: string[];
   event?: string;
+  links?: PostLink[];
   sections: PostSection[];
 };
 
@@ -264,12 +271,24 @@ export const posts: Post[] = [
     slug: "talos-cncf-vienna-sep-2026",
     title: "Immutable, Minimal, Mighty: Running Kubernetes on Bare Metal with Talos",
     date: "Sep 2026",
-    dateISO: "2026-09-01",
+    dateISO: "2026-09-03",
     readingTime: "9 min read",
     event: "CNCF Vienna Meetup",
     excerpt:
       "The writeup behind my CNCF Vienna talk: why we moved a Docker Swarm appliance to Talos Linux, what air-gapped customer sites actually demand, and the operational trade-offs of giving up SSH.",
     tags: ["Talos", "Bare Metal", "Kubernetes", "Air-gapped", "GitOps"],
+    links: [
+      {
+        label: "Slides",
+        href: "https://github.com/rezachalak/talos-cncf-vienna-demo/tree/main/cncf-vienna-slides/talos-cncf-vienna-sep-2026",
+        kind: "slides",
+      },
+      {
+        label: "Demo repository",
+        href: "https://github.com/rezachalak/talos-cncf-vienna-demo",
+        kind: "repo",
+      },
+    ],
     sections: [
       {
         body: [
@@ -335,7 +354,7 @@ export const posts: Post[] = [
       {
         heading: "Slides and questions",
         body: [
-          "The slides from the CNCF Vienna session are available on request, and I am happy to go deeper on any of this — particularly the air-gapped installer work, which was the least glamorous and most interesting part of the project. Email is the fastest way to reach me.",
+          "The slides and the full demo environment are linked at the top of this post — the demo repo carries the manifests and the run sheet from the session, so you can walk through it yourself. I am happy to go deeper on any of this, particularly the air-gapped installer work, which was the least glamorous and most interesting part of the project. Email is the fastest way to reach me.",
         ],
       },
     ],
