@@ -15,10 +15,55 @@
   --color-accent: #38e0a5;
   --color-accent-2: #4aa8ff;
   --color-warn: #f4b942;
+  /* text that sits on top of an accent-filled surface */
+  --color-on-accent: #05070a;
 }
+
 
 :root {
   color-scheme: dark;
+  --grid-line: rgba(39, 49, 64, 0.35);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --color-ink: #f7f9fb;
+    --color-panel: #ffffff;
+    --color-panel-2: #eef2f7;
+    --color-line: #dce3ec;
+    --color-line-2: #c3cede;
+    --color-fg: #0d1520;
+    --color-muted: #4a5768;
+    --color-dim: #6b7889;
+    --color-accent: #067a55;
+    --color-accent-2: #1d6fd4;
+    --color-warn: #a16207;
+    --color-on-accent: #ffffff;
+    --grid-line: rgba(120, 140, 170, 0.30);
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-ink: #f7f9fb;
+  --color-panel: #ffffff;
+  --color-panel-2: #eef2f7;
+  --color-line: #dce3ec;
+  --color-line-2: #c3cede;
+  --color-fg: #0d1520;
+  --color-muted: #4a5768;
+  --color-dim: #6b7889;
+  --color-accent: #067a55;
+  --color-accent-2: #1d6fd4;
+  --color-warn: #a16207;
+  --color-on-accent: #ffffff;
+  --grid-line: rgba(120, 140, 170, 0.30);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --grid-line: rgba(39, 49, 64, 0.35);
 }
 
 html {
@@ -35,8 +80,8 @@ body {
 /* Blueprint grid backdrop */
 .grid-bg {
   background-image:
-    linear-gradient(to right, rgba(39, 49, 64, 0.35) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(39, 49, 64, 0.35) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 56px 56px;
   background-position: center top;
 }
@@ -72,14 +117,21 @@ body {
   animation: trace 5.5s linear infinite;
 }
 
+body,
+header,
+footer {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dot-live, .trace { animation: none; }
   html { scroll-behavior: auto; }
+  body, header, footer { transition: none; }
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
-  color: #fff;
+  background: color-mix(in srgb, var(--color-accent) 28%, transparent);
+  color: var(--color-fg);
 }
 
 /* Thin, unobtrusive scrollbar for horizontal rails */

@@ -74,7 +74,7 @@ export default function Home() {
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <Link
               href="/about"
-              className="rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-medium text-ink transition-opacity hover:opacity-90"
+              className="rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-medium text-on-accent transition-opacity hover:opacity-90"
             >
               Read the résumé
             </Link>
@@ -234,7 +234,7 @@ export default function Home() {
           <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
             <a
               href={`mailto:${contact.email}`}
-              className="rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-medium text-ink transition-opacity hover:opacity-90"
+              className="rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-medium text-on-accent transition-opacity hover:opacity-90"
             >
               {contact.email}
             </a>

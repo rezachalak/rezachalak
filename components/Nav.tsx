@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/lib/content";
+import ThemeToggle from "./ThemeToggle";
 
 const [host, ...tld] = site.domain.split(".");
 
@@ -28,7 +29,8 @@ export default function Nav() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-1 md:flex">
+          <nav className="flex items-center gap-1">
           {nav.map((item) => {
             const active = pathname === item.href;
             return (
@@ -44,17 +46,23 @@ export default function Nav() {
               </Link>
             );
           })}
-        </nav>
+          </nav>
+          <span className="mx-2 h-4 w-px bg-line" />
+          <ThemeToggle />
+        </div>
 
-        <button
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="rounded-md border border-line px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-line-2 hover:text-fg md:hidden"
+          className="rounded-md border border-line px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-line-2 hover:text-fg"
           aria-expanded={open}
           aria-label="Toggle navigation"
         >
           {open ? "close" : "menu"}
-        </button>
+          </button>
+        </div>
       </div>
 
       {open && (

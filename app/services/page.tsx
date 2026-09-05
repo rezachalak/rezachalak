@@ -90,7 +90,7 @@ export default function Services() {
           <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
             <a
               href={`mailto:${contact.email}`}
-              className="rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-medium text-ink transition-opacity hover:opacity-90"
+              className="rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-medium text-on-accent transition-opacity hover:opacity-90"
             >
               {contact.email}
             </a>

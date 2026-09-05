@@ -55,7 +55,16 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          // Runs before first paint: without it the page renders in the
+          // default palette and then snaps to the stored one.
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t)}}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body className="flex min-h-screen flex-col">
         <Nav />
         <main className="flex-1">{children}</main>
