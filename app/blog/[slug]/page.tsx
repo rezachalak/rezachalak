@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Tag } from "@/components/ui";
 import { contact, posts, site } from "@/lib/content";
+import type { PostSection } from "@/lib/posts";
 
 
 const linkIcon: Record<string, React.ReactNode> = {
@@ -29,6 +30,24 @@ const linkIcon: Record<string, React.ReactNode> = {
     </svg>
   ),
 };
+
+function CodeBlock({ code }: { code: { lang: string; content: string } }) {
+  return (
+    <pre className="rail mt-6 overflow-x-auto rounded-lg border border-line bg-panel p-5">
+      <code
+        className="font-mono text-[13px] leading-relaxed text-fg"
+        data-lang={code.lang}
+      >
+        {code.content}
+      </code>
+    </pre>
+  );
+}
+
+/** Sections without a heading are not numbered, so count only the ones that are. */
+function headingNumber(sections: PostSection[], index: number) {
+  return sections.slice(0, index + 1).filter((s) => s.heading).length;
+}
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -129,15 +148,17 @@ export default async function PostPage({ params }: Params) {
 
       <div className="mx-auto max-w-3xl px-5 py-14 sm:px-8 sm:py-20">
         {post.sections.map((s, i) => (
-          <section key={i} className={i === 0 ? "" : "mt-12"}>
+          <section key={i} className={i === 0 ? "" : s.heading ? "mt-12" : "mt-6"}>
             {s.heading && (
               <h2 className="mb-5 flex items-baseline gap-3 text-xl font-medium tracking-tight sm:text-2xl">
                 <span className="font-mono text-[13px] text-accent">
-                  {String(i).padStart(2, "0")}
+                  {String(headingNumber(post.sections, i)).padStart(2, "0")}
                 </span>
                 {s.heading}
               </h2>
             )}
+
+            {s.codeFirst && s.code && <CodeBlock code={s.code} />}
 
             {s.body?.map((para) => (
               <p
@@ -162,13 +183,7 @@ export default async function PostPage({ params }: Params) {
               </ul>
             )}
 
-            {s.code && (
-              <pre className="rail mt-6 overflow-x-auto rounded-lg border border-line bg-panel p-5">
-                <code className="font-mono text-[13px] leading-relaxed text-fg">
-                  {s.code.content}
-                </code>
-              </pre>
-            )}
+            {!s.codeFirst && s.code && <CodeBlock code={s.code} />}
 
             {s.callout && (
               <p className="mt-6 border-l-2 border-accent bg-panel py-4 pl-5 pr-4 text-[15px] leading-[1.7] text-fg">
